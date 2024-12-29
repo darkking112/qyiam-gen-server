@@ -8,7 +8,7 @@ class Student extends Model
 {
     //
     protected $primaryKey = "studentID";
-    protected $fillable = ["studentID","userID","classID"];
+    protected $fillable = ["studentID", "userID", "classID", "name"];
 
     public function user()
     {
@@ -17,16 +17,16 @@ class Student extends Model
 
     public function classe()
     {
-        return $this->belongsTo(Classe::class,"classID","classID");
+        return $this->belongsTo(Classe::class, "classID", "classID");
     }
 
     public function comment()
     {
-        return $this->hasMany(Comment::class,"studentID","studentID");
+        return $this->hasMany(Comment::class, "studentID", "studentID");
     }
 
     public function sheet()
     {
-        return $this->hasMany(Sheet::class,"studentID","studentID");
+        return $this->hasMany(Sheet::class, "studentID", "studentID");
     }
 }
