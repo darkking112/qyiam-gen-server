@@ -27,7 +27,7 @@ class SheetController extends Controller
                 ]);
             } else {
                 return response()->json([
-                    "status" => "error",
+                    "status" => "failed",
                     "message" => "No sheets found for the given student."
                 ]);
             }

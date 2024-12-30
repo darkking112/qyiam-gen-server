@@ -16,7 +16,7 @@ Route::post('/', UserController::class . '@login');
 
 Route::prefix('admin')->group(function () {
     Route::get('get-users', UserController::class . '@getAllUsers');
-    Route::post('reset-user-password', UserController::class . '@resetUserPassword');
+    Route::put('reset-user-password', UserController::class . '@resetUserPassword');
     Route::delete('remove-user/{userID}', UserController::class . '@removeUser');
     Route::post('add-new-user', UserController::class . '@addNewUser');
     Route::put('assign-student-to-class', StudentController::class . '@assignToClass');
@@ -31,6 +31,7 @@ Route::prefix('admin')->group(function () {
 Route::prefix('teacher')->group(function () {
     Route::get('get-students-list/{teacherID}', StudentController::class . '@getStudentsByTeacherID');
     Route::get('get-student-sheets/{studentID}', SheetController::class . '@getSheetsByStudentID');
+    Route::get('check-eligibility/{studentID}', SheetController::class . '@checkStudentEligibility');
     Route::post('add-sheet', SheetController::class . '@addSheet');
     Route::post('add-comment', CommentController::class . '@addComment');
 })->name('teacher');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Classe;
 use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -12,10 +13,10 @@ class StudentController extends Controller
     public function assignToClass(Request $request)
     {
         try {
-            $studentID = $request->input("studentID");
+            $userID = $request->input("userID");
             $classID = $request->input("classID");
 
-            $student = Student::find($studentID);
+            $student = Student::where("userID", "=", $userID)->first();
 
             if ($student) {
                 $student->classID = $classID;
@@ -52,12 +53,12 @@ class StudentController extends Controller
         try {
             $teacherID = $request->teacherID;
 
-            // Get the class associated with the teacher
-            $class = Classe::where("teacherID", $teacherID)->first();
+            $teacher = Teacher::find($teacherID);
+            $classID = $teacher->classID;
 
-            if ($class) {
+            if ($classID) {
                 // Get students associated with the class
-                $students = Student::where("classID", $class->classID)->get();
+                $students = Student::where("classID", "=", $classID)->get();
 
                 if ($students->isNotEmpty()) {
                     return response()->json([

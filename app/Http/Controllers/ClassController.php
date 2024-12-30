@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classe;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class ClassController extends Controller
@@ -34,7 +35,8 @@ class ClassController extends Controller
             if ($class) {
                 return response()->json([
                     "status" => "success",
-                    "message" => "Class added successfully."
+                    "message" => "Class added successfully.",
+                    "class" => $class
                 ]);
             } else {
                 return response()->json([
@@ -121,9 +123,9 @@ class ClassController extends Controller
     {
         try {
             $classID = $request->input("classID");
-            $teacherID = $request->input("teacherID");
+            $userID = $request->input("userID");
 
-            $status = TeacherController::setTeacherClass($teacherID, $classID);
+            $status = TeacherController::setTeacherClass($userID, $classID);
 
             if ($status) {
                 return response()->json([

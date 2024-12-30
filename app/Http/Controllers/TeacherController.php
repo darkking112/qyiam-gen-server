@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 class TeacherController extends Controller
 {
     //
-    public static function setTeacherClass($teacherID, $classID)
+    public static function setTeacherClass($userID, $classID)
     {
         try {
-            $teacher = Teacher::find($teacherID);
+            $teacher = Teacher::where("userID", "=", $userID)->first();
 
             if ($teacher) {
                 $teacher->classID = $classID;

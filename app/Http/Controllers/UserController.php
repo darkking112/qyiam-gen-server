@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -35,6 +36,12 @@ class UserController extends Controller
                         "userInfo" => $user,
                         "teacherInfo" => $teacher
                     ]);
+                } else if ($user->role == "Admin") {
+                    return response()->json([
+                        "status" => "success",
+                        "message" => "Loggedin Successfully",
+                        "userInfo" => $user
+                    ]);
                 }
             } else {
                 return response()->json([
@@ -55,7 +62,7 @@ class UserController extends Controller
     {
         try {
             $users = User::all();
-            return response()->json(["users" => $users]);
+            return response()->json(["status" => "success", "users" => $users]);
         } catch (\Exception $e) {
             return response()->json([
                 "status" => "error",
@@ -115,7 +122,7 @@ class UserController extends Controller
                 }
             } else {
                 return response()->json([
-                    "status" => "error",
+                    "status" => "failed",
                     "message" => "User Not Found"
                 ]);
             }
@@ -172,6 +179,23 @@ class UserController extends Controller
                         "status" => "success",
                         "message" => "Account Created Successfully",
                         "teacherID" => $teacher->teacherID,
+                        "userInfo" => $user
+                    ]);
+                } catch (\Exception $e) {
+                    $user->delete(); // Rollback user creation if teacher creation fails
+                    return response()->json([
+                        "status" => "error",
+                        "message" => "Failed to create Teacher: " . $e->getMessage()
+                    ], 500);
+                }
+            } else if ($user && $role == "Admin") {
+                try {
+                    $admin = Admin::create([
+                        "userID" => $user->userID
+                    ]);
+                    return response()->json([
+                        "status" => "success",
+                        "message" => "Account Created Successfully",
                         "userInfo" => $user
                     ]);
                 } catch (\Exception $e) {
