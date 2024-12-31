@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'], // Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
 
-    'allowed_origins' => ['http://localhost:3000', 'https://qyiam-gen.netlify.app'], // Removed '*' to avoid conflicts
+    'allowed_origins' => ['https://qyiam-gen.netlify.app'], // Removed '*' to avoid conflicts
 
     'allowed_origins_patterns' => [], // No need for patterns if you list origins explicitly
 
