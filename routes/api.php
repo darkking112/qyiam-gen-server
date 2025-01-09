@@ -22,7 +22,7 @@ Route::prefix('admin')->group(function () {
     Route::put('assign-student-to-class', StudentController::class . '@assignToClass');
 
     Route::get('get-student-sheets/{userID}', SheetController::class . '@getSheetsByUserID');
-    Route::get('get-student-sheet/${sheetID}', SheetController::class . '@getSheetByID');
+    Route::get('get-student-sheet/{sheetID}', SheetController::class . '@getSheetByID');
 
     Route::get('get-classes', ClassController::class . '@getClasses');
     Route::put('set-class-name', ClassController::class . '@setClassName');
@@ -36,7 +36,7 @@ Route::prefix('teacher')->group(function () {
     Route::get('get-student-sheets/{studentID}', SheetController::class . '@getSheetsByStudentID');
     Route::get('check-eligibility/{studentID}', SheetController::class . '@checkStudentEligibility');
     Route::post('add-sheet', SheetController::class . '@addSheet');
-    Route::get('get-student-sheet/${sheetID}', SheetController::class . '@getSheetByID');
+    Route::get('get-student-sheet/{sheetID}', SheetController::class . '@getSheetByID');
     Route::post('add-comment', CommentController::class . '@addComment');
 })->name('teacher');
 
