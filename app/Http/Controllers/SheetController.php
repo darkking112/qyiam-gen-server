@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sheet;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class SheetController extends Controller
@@ -145,4 +146,54 @@ class SheetController extends Controller
         }
     }
 
+    public function getSheetsByUserID(Request $request)
+    {
+        try {
+            $userID = $request->userID;
+
+            // Retrieve sheets for the specific student, limit to 30, and order by date
+            $student = Student::where("userID", "=", $userID)->first();
+
+            $sheets = Sheet::where('studentID', '=', $student->studentID)
+                ->limit(30)
+                ->orderBy('date', 'desc')
+                ->get();
+
+            if ($sheets->isNotEmpty()) {
+                return response()->json([
+                    "status" => "success",
+                    "message" => "Sheets retrieved successfully for the student.",
+                    "sheets" => $sheets
+                ]);
+            } else {
+                return response()->json([
+                    "status" => "failed",
+                    "message" => "No sheets found for the given student."
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "error",
+                "message" => "An error occurred while retrieving the sheets.",
+                "error" => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getSheetByID(Request $request)
+    {
+        $sheetID = $request->sheetID;
+        $sheet = Sheet::find($sheetID);
+        if ($sheet) {
+            return response()->json([
+                "status" => "success",
+                "sheet" => $sheet
+            ]);
+        } else {
+            return response()->json([
+                "status" => "failed",
+                "message" => "No sheet found"
+            ]);
+        }
+    }
 }
