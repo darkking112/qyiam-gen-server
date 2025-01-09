@@ -61,7 +61,7 @@ class UserController extends Controller
     public function getAllUsers(Request $request)
     {
         try {
-            $users = User::all()->sortBy('role');
+            $users = User::orderBy('role')->get();
             return response()->json(["status" => "success", "users" => $users]);
         } catch (\Exception $e) {
             return response()->json([
