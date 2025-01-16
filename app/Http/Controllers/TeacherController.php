@@ -26,4 +26,15 @@ class TeacherController extends Controller
         }
     }
 
+    public function getReportData(Request $request)
+    {
+        $studentID = $request->studentID;
+        $studentSheets = SheetController::getReportSheetsByStudentID($studentID);
+        $studentComments = CommentController::getReportCommentsByStudentID($studentID);
+        return response()->json([
+            "sheets" => $studentSheets,
+            "comments" => $studentComments
+        ]);
+    }
+
 }

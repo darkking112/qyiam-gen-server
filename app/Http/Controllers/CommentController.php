@@ -45,4 +45,17 @@ class CommentController extends Controller
         }
     }
 
+    public static function getReportCommentsByStudentID($studentID)
+    {
+        try {
+            $commnets = Comment::where('studentID', '=', $studentID)
+                ->limit(4)
+                ->orderBy('date', 'desc')
+                ->get();
+            return $commnets;
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
+
 }

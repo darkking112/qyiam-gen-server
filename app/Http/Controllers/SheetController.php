@@ -180,6 +180,19 @@ class SheetController extends Controller
         }
     }
 
+    public static function getReportSheetsByStudentID($studentID)
+    {
+        try {
+            $sheets = Sheet::where('studentID', '=', $studentID)
+                ->limit(30)
+                ->orderBy('date', 'desc')
+                ->get();
+            return $sheets;
+        } catch (\Exception $e) {
+            return $e;
+        }
+    }
+
     public function getSheetByID(Request $request)
     {
         $sheetID = $request->sheetID;

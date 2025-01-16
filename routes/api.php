@@ -4,6 +4,7 @@ use App\Http\Controllers\ClassController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\SheetController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,7 @@ Route::prefix('teacher')->group(function () {
     Route::post('add-sheet', SheetController::class . '@addSheet');
     Route::get('get-student-sheet/{sheetID}', SheetController::class . '@getSheetByID');
     Route::post('add-comment', CommentController::class . '@addComment');
+    Route::get('generate-report/${studentID}', TeacherController::class . '@getReportData');
 })->name('teacher');
 
 Route::prefix('student')->group(function () {
