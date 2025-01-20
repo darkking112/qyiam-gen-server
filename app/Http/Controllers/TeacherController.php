@@ -31,10 +31,24 @@ class TeacherController extends Controller
         $studentID = $request->studentID;
         $studentSheets = SheetController::getReportSheetsByStudentID($studentID);
         $studentComments = CommentController::getReportCommentsByStudentID($studentID);
-        return response()->json([
-            "sheets" => $studentSheets,
-            "comments" => $studentComments
-        ]);
+        if ($studentSheets == null || $studentComments == null) {
+            return response()->json([
+                "status" => "error",
+                "message" => "An error occurred while retrieving the report data."
+            ], 500);
+        } else if ($studentSheets->isEmpty() && $studentComments->isEmpty()) {
+            return response()->json([
+                "status" => "failed",
+                "message" => "No data found for the student."
+            ]);
+        } else {
+            return response()->json([
+                "status" => "success",
+                "sheets" => $studentSheets,
+                "comments" => $studentComments
+            ]);
+        }
+
     }
 
 }

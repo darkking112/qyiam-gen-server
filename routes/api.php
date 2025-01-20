@@ -33,16 +33,13 @@ Route::prefix('admin')->group(function () {
 })->name('admin');
 
 Route::prefix('teacher')->group(function () {
-    // Route::get('generate-reports/{studentID}', TeacherController::class . '@getReportData');
     Route::get('get-students-list/{teacherID}', StudentController::class . '@getStudentsByTeacherID');
-
-    Route::get('generate-report/{studentID}', TeacherController::class . '@getReportData');
-
     Route::get('get-student-sheets/{studentID}', SheetController::class . '@getSheetsByStudentID');
     Route::get('check-eligibility/{studentID}', SheetController::class . '@checkStudentEligibility');
     Route::post('add-sheet', SheetController::class . '@addSheet');
     Route::get('get-student-sheet/{sheetID}', SheetController::class . '@getSheetByID');
     Route::post('add-comment', CommentController::class . '@addComment');
+    Route::get('generate-report/{studentID}', TeacherController::class . '@getReportData');
 })->name('teacher');
 
 Route::prefix('student')->group(function () {
