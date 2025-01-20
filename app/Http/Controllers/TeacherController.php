@@ -36,11 +36,6 @@ class TeacherController extends Controller
                 "status" => "error",
                 "message" => "An error occurred while retrieving the report data."
             ], 500);
-        } else if ($studentSheets->isEmpty() && $studentComments->isEmpty()) {
-            return response()->json([
-                "status" => "failed",
-                "message" => "No data found for the student."
-            ]);
         } else {
             return response()->json([
                 "status" => "success",
